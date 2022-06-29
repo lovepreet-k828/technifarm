@@ -1,0 +1,9 @@
+.dcard{
+    width: 50%;
+}
+
+.dcard-img-top{
+    max-width: 50%;
+    width: 50%;
+    flex-grow: 1;
+}

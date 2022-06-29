@@ -1,0 +1,23 @@
+.card-img-top{
+    max-height: 12rem;
+    box-shadow: 0 5px 5px rgba(0,0,0,0.5);
+    border-radius: 5px
+}
+
+.card{
+    width: 18rem;
+    box-shadow: 0 5px 5px rgba(0,0,0,0.5);
+    border-radius: 5px
+}
+
+.quote{
+    width: 80%; 
+    box-shadow: 0 5px 5px rgba(0,0,0,0.5);
+    border-radius: 20px
+}
+
+.cardContainer{
+    width: 80%; 
+    box-shadow: 0 5px 5px rgba(0,0,0,0.5);
+    border-radius: 20px;
+}

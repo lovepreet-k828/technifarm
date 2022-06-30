@@ -14,10 +14,11 @@ function App() {
   return (
     <>
       <Router>
+        <div style={{minWidth:"200px"}}>
         <Head />
         <Routes>
           <Route path='/' element={<Home/>} />
-          <Route path='categories' element={<Categories />} />
+          <Route path='/categories' element={<Categories />} />
           <Route path='/SignUp' element={<SignUp />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/vegetables' element={<Details />} />
@@ -26,8 +27,9 @@ function App() {
           <Route path='/aboutUs' element={<About/>} />
           <Route path='/owner' element={<Owner/>} />
         </Routes>
-      </Router>
       <Footer/>
+      </div>
+      </Router>
     </>
   );
 }

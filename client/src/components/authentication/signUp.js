@@ -3,10 +3,35 @@ import './signUp.css';
 import { Link } from "react-router-dom";
 import { useState } from 'react';
 import axios from 'axios';
+import { Country, State }  from 'country-state-city';
 
 export default function SignUp() {
 
-  const [inputs, setInputs] = useState({});
+  const [countryCode, setCCode] = useState('IN');
+
+  const countries = Country.getAllCountries();
+  var country = countries.map((count) => {
+    return (
+      <option value={count.isoCode}>{count.name}</option>
+    )
+  })
+
+  const states = State.getStatesOfCountry(countryCode);console.log(states);
+  var state = states.map((stat) => {
+    return (
+      <option value={stat.name}>{stat.name}</option>
+    )
+  })
+
+  const experience = ['between [0 to 1]', 'between [1 to 5]', 'between [5 to 10]',
+    'between [10 to 25]', 'between [25 to 50]', 'more than 50'];
+  var expe = experience.map((op) => {
+    return (
+      <option value={op}>{op}</option>
+    )
+  })
+
+  const [inputs, setInputs] = useState({ experience: experience[0], country: 'India', state: states[0].name });
   //   {
   //     "name": "ttmklg1_0",
   //     "experience": "15",
@@ -18,49 +43,49 @@ export default function SignUp() {
   //     "mobileCode": "1122",
   //     "mobileNo": "1122"
   // }
-  
+
   const [CPass, setCPass] = useState('');
 
   const handleChange = (event) => {
+    var maxLength = 50;
     const name = event.target.name;
-    const value = event.target.value;
-    setInputs(values => ({ ...values, [name]: value }))
-    console.log(typeof (name), name, typeof (value), value);
+    var value = event.target.value;
+    if (name === 'mobileNo') { maxLength = 10; }
+    else if (name === 'mobileCode') { maxLength = 3; }
+    else if (name === 'experience') { maxLength = 2; }
+    else maxLength = 50;
+    if (value.length <= maxLength) {
+      if(name==='country'){
+        setCCode(value);
+        value=Country.getCountryByCode(countryCode);
+      }
+      setInputs(values => ({ ...values, [name]: value }))
+      // console.log(value);
+    }
   }
 
-    const handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (CPass !== inputs['password']) { alert('Confirm password is not matching'); }
+    if (CPass !== inputs['password']) { alert('Confirm password is not matching!'); }
+    else if (inputs['mobileCode'].length < 2) { alert('wrong mobile code!'); }
+    else if (inputs['mobileNo'].length < 10) { alert('wrong mobile number!'); }
     else {
-      // console.log(inputs, '<inputs are end here>', inputs["name"]);
+      console.log(inputs, '<inputs are end here>', inputs["name"]);
       axios.post('/user/add', inputs)
         .then(res => {
           console.log(res);
           setCPass('');
-          setInputs({});
+          setInputs({ experience: experience[0], country: countries[0], state: states[0] });
           alert('Account created successfully! now login to continue.')
         })
         .catch(err => {
           console.log('Error in Signup: ', err);
           alert('internall error occured try again!')
-      });
+        });
     }
   }
 
-  const countries = ['India', 'Bhutan'];
-  var country = countries.map((op) => {
-    return (
-      <option value={op}>{op}</option>
-    )
-  })
-
-  const states = ['Punjab', 'Harianha', 'Himachal Pradesh', 'Kerala'];
-  var state = states.map((op) => {
-    return (
-      <option value={op}>{op}</option>
-    )
-  })
 
   return (
     <>
@@ -80,10 +105,12 @@ export default function SignUp() {
 
             <div className="col-md-6">
               <label htmlFor="experience" className="form-label">Your Experience (in years)</label>
-              <input type="text" className="form-control" placeholder="Enter Experience (in years)" id="experience"
+              <select className="form-select" id="experience"
                 name='experience'
                 value={inputs['experience'] || ''}
-                onChange={handleChange} required />
+                onChange={handleChange}
+                required>{expe}
+              </select>
             </div>
 
             <div className="row mt-3">
@@ -92,7 +119,7 @@ export default function SignUp() {
               <label htmlFor="inputCountry" className="form-label">Country</label>
               <select id="inputCountry" className="form-select"
                 name='country'
-                value={inputs["country"] || ''}
+                value={countryCode || ''}
                 onChange={handleChange}
                 required>{country}
               </select>
@@ -150,7 +177,7 @@ export default function SignUp() {
             <div className="col-md-4">
               <label htmlFor="inputMCode" className="form-label">Mobile no. Code</label>
               <input type="number" className="form-control" placeholder="Enter your mobile number" id="inputMCode"
-                name = 'mobileCode'
+                name='mobileCode'
                 value={inputs['mobileCode'] || ''}
                 onChange={handleChange} required />
             </div>
@@ -158,7 +185,7 @@ export default function SignUp() {
             <div className="col-md-8">
               <label htmlFor="inputMno" className="form-label">Mobile no.</label>
               <input type="number" className="form-control" placeholder="Enter your mobile number" id="inputMno"
-                name = 'mobileNo'
+                name='mobileNo'
                 value={inputs['mobileNo'] || ''}
                 onChange={handleChange} required />
             </div>
@@ -172,7 +199,7 @@ export default function SignUp() {
                   <strong>By checking this check box, I am agree that</strong>
                   <ul>
                     <li>
-                      I have read these <a href="#">terms and conditions</a>.
+                      I have read these <Link to="/aboutUs">terms and conditions</Link>.
                     </li>
                     <li>
                       All the information provided above is correct as per my knowledge.

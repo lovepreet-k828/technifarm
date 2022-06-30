@@ -41,7 +41,7 @@ const handleSubmit = (event)=>{
                 Log in
               </button>
               <div className="collapse navbar-collapse" id="navSup">
-                <form className="row g-3" onSubmit={handleSubmit}>
+                <form className="row g-3" style={{justifyContent:"right", paddingRight:"10px"}} onSubmit={handleSubmit}>
                   <div className="col-md-2">
                   <input type="number" className="form-control" placeholder="Code" 
                     name='mCode'

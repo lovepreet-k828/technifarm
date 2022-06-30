@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react'
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {getOwner} from '../../features/owners';
 import "./details.css";
 function Card({product}) {
@@ -29,10 +29,10 @@ function Card({product}) {
       Variety: {product['variety']}
   </li>
   <li>
-      Quantity: {product['quantity']}
+      Quantity: {product['quantity']} kg
   </li>
   <li>
-      MSP(per kg): {product['price']}
+      MSP(Rs. per kg): &#8377; {product['price']} 
   </li>
   <li>
       Contact to owner: {product['ownerId']}
@@ -42,7 +42,7 @@ function Card({product}) {
 <div className="d-flex justify-content-center pb-1">
 {/* <Link to='/owner'> */}
 <button onClick={()=>handleClick(product['ownerId'])} className="btn btn-primary mb-3" >
-Owner details</button>
+See owner details</button>
 {/* </Link> */}
 </div>
 </div>  

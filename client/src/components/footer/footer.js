@@ -3,7 +3,7 @@ import './footer.css';
 
 export default function Footer(){
 return(
-<div className="d-flex flex-column mt-5">
+<div className="d-flex flex-column mt-5 mb-0 " style={{height:"45vh"}}>
      <footer className="bg-dark text-center text-white mt-auto">
   {/* <!-- Grid container --> */}
   <div className="container p-4 pb-0">

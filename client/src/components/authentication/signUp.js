@@ -3,7 +3,7 @@ import './signUp.css';
 import { Link } from "react-router-dom";
 import { useState } from 'react';
 import axios from 'axios';
-import { Country, State }  from 'country-state-city';
+import { Country, State } from 'country-state-city';
 
 export default function SignUp() {
 
@@ -16,7 +16,7 @@ export default function SignUp() {
     )
   })
 
-  const states = State.getStatesOfCountry(countryCode);console.log(states);
+  const states = State.getStatesOfCountry(countryCode); console.log(states);
   var state = states.map((stat) => {
     return (
       <option value={stat.name}>{stat.name}</option>
@@ -55,9 +55,9 @@ export default function SignUp() {
     else if (name === 'experience') { maxLength = 2; }
     else maxLength = 50;
     if (value.length <= maxLength) {
-      if(name==='country'){
+      if (name === 'country') {
         setCCode(value);
-        value=Country.getCountryByCode(countryCode);
+        value = Country.getCountryByCode(countryCode);
       }
       setInputs(values => ({ ...values, [name]: value }))
       // console.log(value);

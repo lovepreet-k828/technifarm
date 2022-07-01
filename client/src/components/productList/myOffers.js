@@ -33,7 +33,8 @@ export default function MyOffers({ options, titl, folder }) {
     handleChange(addCategory);
     handleChange(addOwnerId);
     // dispatch(addOffer(inputs));
-    console.log(inputs);
+    // console.log(inputs);
+    if(passw === currentUser.password){
     axios.post(`/product/add/`, inputs)
       .then(res => {
         console.log('succsess', res);
@@ -44,7 +45,15 @@ export default function MyOffers({ options, titl, folder }) {
         console.log('error : ', err)
         alert('Error: Internal error occured try again!')
       });
+    }
+    else {
+      alert('Wrong password: Please enter your correct password!')
+    }
 
+  }
+
+  const handleUnauthorised = ()=>{
+    ss(false);
   }
 
   return (
@@ -107,7 +116,11 @@ export default function MyOffers({ options, titl, folder }) {
             </div>
             <button type="submit" className="btn btn-primary mt-3">Submit</button>
           </form>
-        </div> : alert('Do login to create new offer!'))}
+        </div> : 
+       <>
+         {handleUnauthorised}
+         </>
+          )}
 
     </>
   );

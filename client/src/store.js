@@ -5,7 +5,7 @@ import ownerReducer from './features/owners';
 
 export const store = configureStore(
     {
-        reducer: { 
+        reducer: {
             offer: offerReducer,
             currentUser: userReducer,
             currentOwner: ownerReducer,
